@@ -3,10 +3,16 @@
 Write a simple Python program for the modulation and demodulation of PSK and QPSK.
 # Tools required
 Google colab
+# Theroy 
+Phase Shift Keying (PSK):
+Phase Shift Keying is a digital modulation technique in which the phase of a carrier signal is varied according to the digital data (0s and 1s) to be transmitted0
+
+Quadrature Phase Shift Keying (QPSK)
+QPSK is a type of PSK where two bits per symbol are transmitted by using four different phases of the carrier.
+
 # Program
 # PSK
 ```
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import butter, lfilter
@@ -93,16 +99,13 @@ for i in range(n):
     elif x[i] == '11':
         mod.extend(d)
         inp.extend([1, 1])
-
 # Time base for square waves
 bit_duration = len(t)
 inp_time = np.repeat(np.arange(len(inp)), 2)
 inp_wave = np.repeat(inp, 2)
-
 # Demodulation
 demod = []
 ptr = 2  # sampling point
-
 for i in range(n):
     val = mod[i * len(t) + ptr]
     if val <= -0.77:
@@ -113,24 +116,19 @@ for i in range(n):
         demod.extend([1, 0])
     else:
         demod.extend([1, 1])
-
 demod_time = np.repeat(np.arange(len(demod)), 2)
 demod_wave = np.repeat(demod, 2)
-
 # Plotting
 plt.figure(figsize=(10, 6))
-
 plt.subplot(3, 1, 1)
 plt.plot(inp_time, inp_wave, drawstyle='steps-post')
 plt.title('Input Bainar Data')
 plt.ylim(-0.5, 1.5)
 plt.grid(True)
-
 plt.subplot(3, 1, 2)
 plt.plot(mod)
 plt.grid(True)
 plt.title('QPSK Modulated Signal')
-
 plt.subplot(3, 1, 3)
 plt.plot(demod_time, demod_wave, drawstyle='steps-post')
 plt.title('Demodulated Signal')
